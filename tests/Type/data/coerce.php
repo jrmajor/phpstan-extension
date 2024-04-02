@@ -29,6 +29,20 @@ class GeneralTest
         assertType('array', $input);
     }
 
+	/**
+	 * @param array<mixed> $input
+	 */
+	public function coerceComplex(array $input): void
+	{
+		$spec = Type\dict(Type\string(), Type\shape([
+			'a' => Type\non_empty_string(),
+			'b' => Type\non_empty_string(),
+		]));
+		$output = $spec->coerce($input);
+		assertType('array<string, array{a: non-empty-string, b: non-empty-string}>', $output);
+		assertType('array', $input);
+	}
+
 	public function coerceInt($i): void
 	{
 		$spec = Type\int();
